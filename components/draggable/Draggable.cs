@@ -9,7 +9,7 @@ public partial class Draggable : Node {
     public override void _Ready() {
         base._Ready();
 
-        draggable.Connect("gui_input", new Callable(this, MethodName.on_gui_input));
+        draggable.GuiInput += on_gui_input;
 
         GD.Print("Loaded");
     }
