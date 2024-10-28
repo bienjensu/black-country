@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bioshdpi34xf4"]
+
+[ext_resource type="Script" path="res://components/draggable/Draggable.cs" id="1_tv2v5"]
+
+[node name="Draggable" type="Node"]
+script = ExtResource("1_tv2v5")
