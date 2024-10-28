@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://lfqlmr3j3x7n"]
+
+[ext_resource type="PackedScene" uid="uid://b5caai77fdttg" path="res://entities/test_document/test_document.tscn" id="1_212of"]
+
+[node name="Debug" type="Node2D"]
+
+[node name="TestDocument" parent="." instance=ExtResource("1_212of")]
+position = Vector2(316, 199)
+
+[node name="TestDocument2" parent="." instance=ExtResource("1_212of")]
+position = Vector2(498, 201)
+rotation = -1.5708
+
+[node name="TestDocument3" parent="." instance=ExtResource("1_212of")]
+position = Vector2(651, 201)
+rotation = -1.5708
+skew = 0.37001
+
+[node name="TestDocument4" parent="." instance=ExtResource("1_212of")]
+position = Vector2(838, 216)
+rotation = -1.05418
+scale = Vector2(2, 2)
+skew = 0.37001
