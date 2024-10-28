@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwbkx8tfsxel0"]
+
+[ext_resource type="Script" path="res://components/collapsible/Collapsible.cs" id="1_ihxyw"]
+
+[node name="Collapsible" type="Node"]
+script = ExtResource("1_ihxyw")
