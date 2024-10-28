@@ -10,8 +10,6 @@ public partial class Draggable : Node {
         base._Ready();
 
         draggable.GuiInput += on_gui_input;
-
-        GD.Print("Loaded");
     }
 
     public override void _Process(double delta) {
