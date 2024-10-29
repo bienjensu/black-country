@@ -16,38 +16,58 @@ public partial class Draggable : Node {
         base._Process(delta);
 
         if (dragState is DragState.Dragging) {
-            target.Scale = new Vector2(1.1f, 1.1f);
             var difference = target.Position -
                              target.Position.Lerp(target.GetPosition() + moveTarget,
                                                   (float)delta * 10f);
+
+            target.Skew = -difference.X / 100f;
+
+            target.Rotation = -difference.X / 100f;
+
             target.Translate(-difference);
 
             moveTarget += difference;
         }
-        else {
-            target.Scale = Vector2.One;
-        }
     }
 
     private void on_gui_input(InputEvent @event) {
-        dragState = (@event, dragState) switch {
-                        (InputEventMouseButton {
-                             ButtonIndex: MouseButton.Left,
-                             Pressed    : true
-                         }, DragState.Released) => DragState.Dragging,
+        (dragState, var changed) = (@event, dragState) switch {
+                                       (InputEventMouseButton {
+                                            ButtonIndex: MouseButton.Left,
+                                            Pressed    : true
+                                        }, DragState.Released) => (DragState.Dragging,
+                                                                   true),
 
-                        (InputEventMouseButton {
-                             ButtonIndex: MouseButton.Left,
-                             Pressed    : false
-                         }, DragState.Dragging) => DragState.Released,
+                                       (InputEventMouseButton {
+                                            ButtonIndex: MouseButton.Left,
+                                            Pressed    : false
+                                        }, DragState.Dragging) => (DragState.Released,
+                                                                   true),
 
-                        (_, _) => dragState
-                    };
+                                       (_, _) => (dragState, false)
+                                   };
 
         if (@event is InputEventMouseMotion motion)
             moveTarget += target.Transform.BasisXform(motion.Relative);
 
+        @event.Dispose();
+
         if (dragState is DragState.Released) moveTarget = Vector2.Zero;
+
+        if (!changed) return;
+        if (dragState is DragState.Released) {
+            moveTarget = Vector2.Zero;
+            var tween = CreateTween();
+            tween.SetParallel();
+            tween.TweenProperty(target, "skew",     0f,          0.1);
+            tween.TweenProperty(target, "rotation", 0f,          0.1);
+            tween.TweenProperty(target, "scale",    Vector2.One, 0.1);
+        }
+        else {
+            target.MoveToFront();
+            var tween = CreateTween();
+            tween.TweenProperty(target, "scale", Vector2.One * 1.1f, 0.1);
+        }
     }
 
     private enum DragState {
