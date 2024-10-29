@@ -11,15 +11,21 @@ config_version=5
 [application]
 
 config/name="black-country"
+run/main_scene="res://scenes/debug/debug.tscn"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [display]
 
-window/size/always_on_top=true
+window/size/mode=4
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+window/vsync/vsync_mode=2
 
 [dotnet]
 
 project/assembly_name="black-country"
+
+[physics]
+
+common/physics_ticks_per_second=120
