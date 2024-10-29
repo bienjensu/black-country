@@ -28,7 +28,7 @@ public partial class Collapsible : Node {
     }
 
     public override string[] _GetConfigurationWarnings() {
-        List<string> warnings = [""];
+        List<string> warnings = [];
 
         if (collapsibles.Count == 0) warnings.Add("No collapsibles found.");
         if (collapsible is null) warnings.Add("No collapsible found.");
@@ -50,6 +50,7 @@ public partial class Collapsible : Node {
                                        (CollapseState.Collapsed, true),
                                    (_, _) => (state, false)
                                };
+        @event.Dispose();
         if (changed) collapseState = state;
     }
 
