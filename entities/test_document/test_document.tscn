@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5caai77fdttg"]
+[gd_scene load_steps=4 format=3 uid="uid://b5caai77fdttg"]
 
 [ext_resource type="PackedScene" uid="uid://bioshdpi34xf4" path="res://components/draggable/draggable.tscn" id="1_0bdp4"]
+[ext_resource type="Script" path="res://entities/test_document/quitbutton.gd" id="1_rpgv0"]
 [ext_resource type="PackedScene" uid="uid://bwbkx8tfsxel0" path="res://components/collapsible/collapsible.tscn" id="2_c7l0m"]
 
 [node name="TestDocument" type="Node2D"]
@@ -26,19 +27,25 @@ layout_mode = 2
 text = "Some text here"
 
 [node name="Label2" type="Label" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Some text here"
 
 [node name="Label3" type="Label" parent="PanelContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Some text here"
 
 [node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 2
+mouse_filter = 1
 text = "And a button"
+script = ExtResource("1_rpgv0")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[rainbow amp=25.0 freq=0.1 connected=0][url]Massive Attack[/url][/rainbow]"
+fit_content = true
 
 [node name="Draggable" parent="." node_paths=PackedStringArray("draggable", "target") instance=ExtResource("1_0bdp4")]
 draggable = NodePath("../PanelContainer")
@@ -47,3 +54,9 @@ target = NodePath("..")
 [node name="Collapsible" parent="." node_paths=PackedStringArray("collapsible", "collapsibles") instance=ExtResource("2_c7l0m")]
 collapsible = NodePath("../PanelContainer")
 collapsibles = [NodePath("../PanelContainer/VBoxContainer/Label2"), NodePath("../PanelContainer/VBoxContainer/Label3")]
+collapseState = 1
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="PanelContainer/VBoxContainer/Button" method="_on_pressed"]
+[connection signal="meta_clicked" from="PanelContainer/VBoxContainer/RichTextLabel" to="PanelContainer/VBoxContainer/Button" method="_on_rich_text_label_meta_clicked"]
+[connection signal="meta_hover_ended" from="PanelContainer/VBoxContainer/RichTextLabel" to="PanelContainer/VBoxContainer/Button" method="_on_rich_text_label_meta_hover_ended"]
+[connection signal="meta_hover_started" from="PanelContainer/VBoxContainer/RichTextLabel" to="PanelContainer/VBoxContainer/Button" method="_on_rich_text_label_meta_hover_started"]
